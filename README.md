@@ -18,6 +18,6 @@ backend with the following packages:
 and [image_picker](https://pub.dev/packages/image_picker) is used to choose profile the picture from
 device storage
 
-![Alt text](screenshots/Screenshot_20221005_152027_framed.png "Login Screen")
+![Alt text](screenshots/Screenshot_20221005_152027_framed.png  "Login Screen")
 
-![Alt text](screenshots/Screenshot_20221005_160305_framed.png "Chat Screen")
+<img src="screenshots/Screenshot_20221005_160305_framed.png" width=50%>
