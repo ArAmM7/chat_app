@@ -15,8 +15,17 @@ class Messages extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Stack(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Theme.of(context).colorScheme.surface,
+                ),
+              ),
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ],
           );
         } else {
           final chatDocs = snapshot.data!.docs;
