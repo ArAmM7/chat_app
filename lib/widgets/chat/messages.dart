@@ -21,7 +21,7 @@ class Messages extends StatelessWidget {
         } else {
           final chatDocs = snapshot.data!.docs;
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            //padding: const EdgeInsets.symmetric(horizontal: 4),
             reverse: true,
             itemCount: chatDocs.length,
             itemBuilder: (context, index) => MessageBubble(
@@ -29,7 +29,7 @@ class Messages extends StatelessWidget {
               chatDocs[index]['userId'] == FirebaseAuth.instance.currentUser!.uid,
               chatDocs[index]['username'],
               chatDocs[index]['userImage'],
-              key: ValueKey(chatDocs[index].id),
+              //key: ValueKey(chatDocs[index].id),
             ),
           );
         }

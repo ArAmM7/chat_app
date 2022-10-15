@@ -13,18 +13,59 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.surface,
+            isMe ? BlendMode.srcOut : BlendMode.dstATop,
+          ),
+          child: Container(
+            width: double.infinity,
+            alignment: isMe ? Alignment.centerLeft : Alignment.centerRight,
+            color: Colors.transparent,
+            child: _Bubble(isMe: isMe, userImage: userImage, message: message, username: username),
+          ),
+        ),
+        _Bubble(
+            isMe: isMe, userImage: userImage, message: message, username: username, isShow: true),
+      ],
+    );
+  }
+}
+
+class _Bubble extends StatelessWidget {
+  const _Bubble({
+    Key? key,
+    required this.isMe,
+    required this.userImage,
+    required this.message,
+    required this.username,
+    this.isShow = false,
+  }) : super(key: key);
+
+  final bool isMe;
+  final String userImage;
+  final String message;
+  final String username;
+  final bool isShow;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
+        const SizedBox(width: 4),
         if (!isMe)
-          CircleAvatar(
-              foregroundImage: Image.network(userImage).image,
-              backgroundColor: Theme.of(context).colorScheme.background.withAlpha(64)),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: CircleAvatar(
+                foregroundImage: isShow ? Image.network(userImage).image : null,
+                backgroundColor: Theme.of(context).colorScheme.background.withAlpha(64)),
+          ),
         Container(
           decoration: BoxDecoration(
-            color: isMe
-                ? Theme.of(context).colorScheme.secondary
-                : Theme.of(context).colorScheme.background.withAlpha(64),
+            color: isMe && isShow ? Colors.transparent : Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.only(
               topLeft: const Radius.circular(20),
               topRight: const Radius.circular(20),
@@ -38,18 +79,25 @@ class MessageBubble extends StatelessWidget {
           child: Column(
             crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              Text(username,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isMe
+              Text(
+                username,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isShow
+                      ? isMe
                           ? Theme.of(context).colorScheme.onSecondary
-                          : Theme.of(context).colorScheme.onBackground)),
+                          : Theme.of(context).colorScheme.onSurface
+                      : null,
+                ),
+              ),
               Text(
                 message,
                 style: TextStyle(
-                  color: isMe
-                      ? Theme.of(context).colorScheme.onSecondary
-                      : Theme.of(context).colorScheme.onBackground,
+                  color: isShow
+                      ? isMe
+                          ? Theme.of(context).colorScheme.onSecondary
+                          : Theme.of(context).colorScheme.onSurface
+                      : null,
                 ),
                 textAlign: isMe ? TextAlign.end : TextAlign.start,
               ),
@@ -57,9 +105,14 @@ class MessageBubble extends StatelessWidget {
           ),
         ),
         if (isMe)
-          CircleAvatar(
-              foregroundImage: Image.network(userImage).image,
-              backgroundColor: Theme.of(context).colorScheme.background.withAlpha(64)),
+          Align(
+            alignment: Alignment.centerRight,
+            child: CircleAvatar(
+              foregroundImage: isShow ? Image.network(userImage).image : null,
+              backgroundColor: Theme.of(context).colorScheme.background.withAlpha(64),
+            ),
+          ),
+        const SizedBox(width: 4),
       ],
     );
   }

@@ -36,11 +36,28 @@ class ChatScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: const [
+        children: [
           Expanded(
-            child: Messages(),
+            child: Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.pinkAccent,
+                        Colors.deepPurpleAccent,
+                        Colors.blue,
+                      ],
+                    ),
+                  ),
+                ),
+                const Messages(),
+              ],
+            ),
           ),
-          NewMessage(),
+          const NewMessage(),
         ],
       ),
     );
