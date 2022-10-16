@@ -17,10 +17,10 @@ class Messages extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Stack(
             children: [
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.surface,
-                ),
+              Container(
+                width: double.infinity,
+                height: double.maxFinite,
+                color: Theme.of(context).colorScheme.surface,
               ),
               const Center(
                 child: CircularProgressIndicator(),
@@ -30,6 +30,7 @@ class Messages extends StatelessWidget {
         } else {
           final chatDocs = snapshot.data!.docs;
           return ListView.builder(
+            //physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             //padding: const EdgeInsets.symmetric(horizontal: 4),
             reverse: true,
             itemCount: chatDocs.length,
