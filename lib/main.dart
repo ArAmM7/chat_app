@@ -1,11 +1,15 @@
-import 'package:chat_app/providers/firebase_init.dart';
-import 'package:chat_app/screens/auth_screen.dart';
-import 'package:chat_app/screens/chat_screen.dart';
-import 'package:chat_app/screens/splash_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/Views/Auth/auth_view.dart';
+import 'package:chat_app/Views/Chat/chat_view.dart';
+import 'package:chat_app/Views/splash_screen.dart';
+import 'package:chat_app/stores/firebase_init.dart';
+import 'package:chat_app/utils/register_singletons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  RegisterSingletons.init();
   runApp(const MyApp());
 }
 
@@ -31,27 +35,12 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.black,
         ),
       ),
-      home: FutureBuilder(
-        future: FirebaseInit.initializeDefault,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting || snapshot.hasError) {
-            return const SplashScreen();
-          } else {
-            return StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const SplashScreen();
-                }
-                if (snapshot.hasData) {
-                  return const ChatScreen();
-                } else {
-                  return const AuthScreen();
-                }
-              },
-            );
-          }
-        },
+      home: Observer(
+        builder: (BuildContext context) => !GetIt.I<FirebaseInit>().isLoaded
+            ?  SplashScreen()
+            : GetIt.I<FirebaseInit>().isLoggedIn
+                ?  ChatScreen()
+                : AuthScreen(),
       ),
     );
   }

@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
+  const MessageBubble(this.message, this.isMe, this.username, this.userImage, {Key? key})
+      : super(key: key);
+
   final String message;
   final bool isMe;
   final String username;
   final String userImage;
-
-  const MessageBubble(this.message, this.isMe, this.username, this.userImage, {Key? key})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,9 +3,9 @@
 A chat app, with signup, login and notifications. currently it has one public chatroom where all
 users chat.
 
-The [Provider package](https://pub.dev/packages/provider) is used for state management, which is
-enough for this kind and size of app. [Firebase](https://firebase.google.com/) is used as the
-backend with the following packages:
+[MobX](https://pub.dev/packages/mobx) is used for state
+management. [Firebase](https://firebase.google.com/) is used as the backend with the following
+packages:
 
 - [firebase_core](https://pub.dev/packages/firebase_core)
 - [firebase_auth](https://pub.dev/packages/firebase_auth)

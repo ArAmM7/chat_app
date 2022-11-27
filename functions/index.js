@@ -12,7 +12,6 @@ exports.myFunction = functions
         notification: {
           title: change.data().username,
           body: change.data().text,
-          clickAction: "FLUTTER_NOTIFICATION_CLICK",
         },
-      }, {priority: "High Priority"});
+      }, {priority: "high"});
     });
