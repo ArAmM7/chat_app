@@ -1,7 +1,8 @@
-import 'package:chat_app/widgets/chat/messages.dart';
-import 'package:chat_app/widgets/chat/new_message.dart';
+import 'package:chat_app/Views/Chat/widgets/messages.dart';
+import 'package:chat_app/Views/Chat/widgets/new_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class ChatScreen extends StatelessWidget {
               ],
             ),
           ),
-          const NewMessage(),
+          NewMessage(),
         ],
       ),
     );
