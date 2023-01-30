@@ -11,8 +11,13 @@ class NewMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).padding.bottom,
+        left: 8,
+        right: 8,
+        top: 8,
+      ),
       color: Theme.of(context).colorScheme.primary.withAlpha(32),
-      padding: const EdgeInsets.all(8),
       child: Row(
         children: [
           Expanded(
@@ -20,7 +25,9 @@ class NewMessage extends StatelessWidget {
               textCapitalization: TextCapitalization.sentences,
               autocorrect: true,
               enableSuggestions: true,
-              textInputAction: TextInputAction.send,
+              textInputAction: TextInputAction.newline,
+              maxLines: 3,
+              minLines: 1,
               controller: GetIt.I<MessageComposing>().controller,
               decoration: const InputDecoration(labelText: 'Send a message...'),
               onChanged: (val) => GetIt.I<MessageComposing>().updateMessage(val),
@@ -31,19 +38,24 @@ class NewMessage extends StatelessWidget {
                 ? IconButton(
                     color: Theme.of(context).colorScheme.primary,
                     icon: const Icon(Icons.send),
-                    onPressed: GetIt.I<MessageComposing>().enteredMessage.trim().isEmpty
+                    onPressed: GetIt.I<MessageComposing>()
+                            .enteredMessage
+                            .trim()
+                            .isEmpty
                         ? null
                         : () async {
                             GetIt.I<MessageComposing>().clearMessage();
                             FocusScope.of(context).unfocus();
-                            final String userId = FirebaseAuth.instance.currentUser!.uid;
+                            final String userId =
+                                FirebaseAuth.instance.currentUser!.uid;
                             final userData = await FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(userId)
                                 .get();
                             FirebaseFirestore.instance.collection('chat').add(
                               {
-                                'text': GetIt.I<MessageComposing>().enteredMessage,
+                                'text':
+                                    GetIt.I<MessageComposing>().enteredMessage,
                                 'createdAt': Timestamp.now(),
                                 'userId': userId,
                                 'username': userData['username'],

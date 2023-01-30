@@ -30,8 +30,8 @@ class Messages extends StatelessWidget {
         } else {
           final chatDocs = snapshot.data!.docs;
           return ListView.builder(
-            //physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            //padding: const EdgeInsets.symmetric(horizontal: 4),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            padding: EdgeInsets.zero,
             reverse: true,
             itemCount: chatDocs.length,
             itemBuilder: (context, index) => MessageBubble(
